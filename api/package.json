@@ -1,0 +1,20 @@
+{
+  "name": "picontainer-api",
+  "version": "0.1.0",
+  "description": "An images hub API",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "pichub",
+    "picbucket",
+    "imghub",
+    "imgbucket",
+    "photohub",
+    "photobucket"
+  ],
+  "author": "Nizar Affes",
+  "license": "MIT"
+}
