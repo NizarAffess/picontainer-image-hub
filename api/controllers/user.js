@@ -37,7 +37,10 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
-
+    if (!user) {
+      res.status(400).json({ message: "No user found with this email" });
+      return;
+    }
     const { username, email, password, _id } = user._doc;
     const comparedPassword = await bcrypt.compare(req.body.password, password);
     if (user && comparedPassword) {
