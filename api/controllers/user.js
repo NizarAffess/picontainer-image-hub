@@ -58,10 +58,24 @@ const loginUser = async (req, res) => {
   }
 };
 
+const getProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id); // Returned from the middleware.
+    if (user) {
+      const { password, ...rest } = user._doc;
+      res.status(200).json(rest);
+    }
+    res.status(400).json({ message: "No user found" });
+  } catch (error) {
+    console.log("Error while getting user: ", error);
+    res.status(500).json(error);
+  }
+};
+
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: "30d",
   });
 };
 
-module.exports = { registerUser, loginUser };
+module.exports = { registerUser, loginUser, getProfile };
