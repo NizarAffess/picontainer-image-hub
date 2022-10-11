@@ -4,11 +4,13 @@ const {
   updateImage,
   deleteImage,
   getImage,
+  getImages,
 } = require("../controllers/image");
 
 const router = require("express").Router();
 
 router.get("/", getCreateRoute);
+router.get("/images", getImages);
 router.get("/image/:id", getImage);
 router.post("/image/create", createImage);
 router.put("/image/:id", updateImage);

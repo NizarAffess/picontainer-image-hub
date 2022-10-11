@@ -66,10 +66,24 @@ const getImage = async (req, res) => {
   }
 };
 
+const getImages = async (req, res) => {
+  try {
+    const images = await Image.find();
+    if (!images) {
+      res.status(400).json({ message: "No images found" });
+    }
+    res.status(200).json(images);
+  } catch (error) {
+    console.log("Error while getting images: ", error);
+    res.status(500).json(error);
+  }
+};
+
 module.exports = {
   createImage,
   getCreateRoute,
   updateImage,
   deleteImage,
   getImage,
+  getImages,
 };
