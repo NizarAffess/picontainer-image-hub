@@ -9,7 +9,13 @@ const createImage = async (req, res) => {
     if (!req.body.title) {
       res.status(400).json({ message: "Please add an image title" });
     }
-    const image = await Image.create(req.body);
+    const { title, description, url } = req.body;
+    const image = await Image.create({
+      title,
+      description,
+      url,
+      user: req.user.id, // The User ref is required
+    });
     res.status(200).json(image);
   } catch (error) {
     console.log("Error while creating image: ", error);
@@ -68,7 +74,7 @@ const getImage = async (req, res) => {
 
 const getImages = async (req, res) => {
   try {
-    const images = await Image.find();
+    const images = await Image.find({ user: req.user.id });
     if (!images) {
       res.status(400).json({ message: "No images found" });
     }
