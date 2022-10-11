@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const registerUser = async (req, res) => {
   try {
@@ -15,10 +16,16 @@ const registerUser = async (req, res) => {
       password: hashedPassword,
     });
     if (user) {
-      const { password, ...rest } = user._doc;
-      res
-        .status(201)
-        .json({ message: `${user.username} successfully created`, rest });
+      const { username, email, _id } = user._doc;
+      res.status(201).json({
+        message: `${user.username} successfully created`,
+        user: {
+          username,
+          email,
+          _id,
+          token: generateToken(_id),
+        },
+      });
     }
   } catch (error) {
     console.log("Error while creating user: ", error);
@@ -30,12 +37,18 @@ const loginUser = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
 
-    const { password, ...rest } = user._doc;
+    const { username, email, password, _id } = user._doc;
     const comparedPassword = await bcrypt.compare(req.body.password, password);
     if (user && comparedPassword) {
-      res
-        .status(200)
-        .json({ message: `${user.username} Successfully logged in`, rest });
+      res.status(200).json({
+        message: `${user.username} Successfully logged in`,
+        user: {
+          username,
+          email,
+          _id,
+          token: generateToken(_id),
+        },
+      });
     } else {
       res.status(400).json({ message: "Wrong credentials" });
     }
@@ -43,6 +56,12 @@ const loginUser = async (req, res) => {
     console.log("Error while logging in: ", error);
     res.status(500).json(error);
   }
+};
+
+const generateToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: "30d",
+  });
 };
 
 module.exports = { registerUser, loginUser };
