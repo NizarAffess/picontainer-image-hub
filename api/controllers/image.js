@@ -29,6 +29,11 @@ const updateImage = async (req, res) => {
     if (!image) {
       res.status(400).json({ message: "Image not found" });
     }
+    console.log("LINE 33, image.user: ", image?.user.toString());
+    if (image.user.toString() !== req.user.id) {
+      res.status(401).json({ message: "User not authorized" });
+      return;
+    }
     const updatedImage = await Image.findByIdAndUpdate(
       req.params.id,
       req.body,
@@ -48,6 +53,10 @@ const deleteImage = async (req, res) => {
     const image = await Image.findById(req.params.id);
     if (!image) {
       res.status(400).json({ message: "Image not found" });
+    }
+    if (image.user.toString() !== req.user.id) {
+      res.status(401).json({ message: "User not authorized" });
+      return;
     }
     const deletedImage = await Image.findByIdAndDelete(req.params.id);
     res
