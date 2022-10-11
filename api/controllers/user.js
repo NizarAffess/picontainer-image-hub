@@ -7,6 +7,7 @@ const registerUser = async (req, res) => {
     const userExists = await User.findOne({ email: req.body.email });
     if (userExists) {
       res.status(400).json({ message: "User already exist" });
+      return;
     }
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
@@ -64,6 +65,7 @@ const getProfile = async (req, res) => {
     if (user) {
       const { password, ...rest } = user._doc;
       res.status(200).json(rest);
+      return;
     }
     res.status(400).json({ message: "No user found" });
   } catch (error) {
