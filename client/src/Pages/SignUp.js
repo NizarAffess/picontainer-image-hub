@@ -8,10 +8,27 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useState } from "react";
 
 const theme = createTheme();
 
 const SignUp = () => {
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const { username, email, password, confirmPassword } = formData;
+
+  const handleChange = (e) => {
+    setFormData((formData) => ({
+      ...formData,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -33,9 +50,7 @@ const SignUp = () => {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            {/* <LockOutlinedIcon /> */}
-          </Avatar>
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}></Avatar>
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
@@ -50,7 +65,9 @@ const SignUp = () => {
                 <TextField
                   required
                   fullWidth
+                  onChange={handleChange}
                   id="username"
+                  value={username}
                   label="username"
                   name="username"
                 />
@@ -59,7 +76,9 @@ const SignUp = () => {
                 <TextField
                   required
                   fullWidth
+                  onChange={handleChange}
                   id="email"
+                  value={email}
                   label="Email Address"
                   name="email"
                   type="email"
@@ -69,7 +88,9 @@ const SignUp = () => {
                 <TextField
                   required
                   fullWidth
+                  onChange={handleChange}
                   name="password"
+                  value={password}
                   label="Password"
                   type="password"
                   id="password"
@@ -79,10 +100,12 @@ const SignUp = () => {
                 <TextField
                   required
                   fullWidth
-                  name="confirm_password"
+                  onChange={handleChange}
+                  name="confirmPassword"
+                  value={confirmPassword}
                   label="Confirm Password"
                   type="password"
-                  id="confirm_password"
+                  id="confirmPassword"
                 />
               </Grid>
             </Grid>
