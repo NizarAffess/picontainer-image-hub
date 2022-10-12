@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { register, reset } from "../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../Components/Spinner";
 
 const theme = createTheme();
 
@@ -57,6 +58,10 @@ const SignUp = () => {
       dispatch(register({ username, email, password }));
     }
   };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <ThemeProvider theme={theme}>
