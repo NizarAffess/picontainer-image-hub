@@ -1,6 +1,7 @@
 const express = require("express");
 const connectDB = require("./config/db");
 const dotenv = require("dotenv").config();
+const cors = require("cors");
 const imageRoutes = require("./routes/image");
 const userRoutes = require("./routes/user");
 let PORT = process.env.PORT || 8083;
@@ -8,8 +9,13 @@ let PORT = process.env.PORT || 8083;
 const app = express();
 connectDB();
 
+const corsOptions = {
+  origin: "http://localhost:3020",
+};
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors(corsOptions));
 
 app.use("/api", imageRoutes);
 app.use("/api", userRoutes);
