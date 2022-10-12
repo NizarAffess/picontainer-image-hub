@@ -8,7 +8,10 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { register, reset } from "../features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 
@@ -21,6 +24,23 @@ const SignUp = () => {
   });
 
   const { username, email, password, confirmPassword } = formData;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user, isError, isSuccess, isLoading, message } = useSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    if (isError) {
+      console.log("SNACKBAR: Error while register");
+    }
+    if (isSuccess || user) {
+      // user might/not be removed here
+      console.log("SNACKBAR: User Successfully registered");
+      navigate("/");
+    }
+    dispatch(reset());
+  }, [isError, user, isSuccess, navigate, dispatch]);
 
   const handleChange = (e) => {
     setFormData((formData) => ({
@@ -29,13 +49,13 @@ const SignUp = () => {
     }));
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      console.log("SNACKBAR: Passwords don't match");
+    } else {
+      dispatch(register({ username, email, password }));
+    }
   };
 
   return (
