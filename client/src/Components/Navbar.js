@@ -7,6 +7,8 @@ const pages = [
   { title: "Home", endpoint: "/" },
   { title: "Upload", endpoint: "/image/upload" },
   { title: "Images", endpoint: "/images" },
+  { title: "Sign Up", endpoint: "/register" },
+  { title: "Sign in", endpoint: "/login" },
 ];
 
 const Navbar = () => {
