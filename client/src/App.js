@@ -1,10 +1,14 @@
 import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 import "./App.css";
+import Navbar from "./Components/Navbar";
 
 function App() {
   return (
     <div className="App">
-      <h3>React Redux App</h3>
+      <Router>
+        <Navbar />
+      </Router>
     </div>
   );
 }
