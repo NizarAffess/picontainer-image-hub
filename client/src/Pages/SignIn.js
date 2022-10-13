@@ -8,7 +8,11 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { login, reset } from "../features/auth/authSlice";
+import Spinner from "../Components/Spinner";
 
 const theme = createTheme();
 
@@ -19,6 +23,11 @@ const SignIn = () => {
   });
 
   const { email, password } = formData;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user, isError, isSuccess, isLoading, message } = useSelector(
+    (state) => state.auth
+  );
 
   const handleChange = (e) => {
     setFormData((formData) => ({
@@ -29,12 +38,24 @@ const SignIn = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    dispatch(login({ email, password }));
+    dispatch(reset());
   };
+
+  useEffect(() => {
+    if (isError) {
+      console.log("SNACKBAR: Error while login");
+    }
+    if (isSuccess || user) {
+      console.log("SNACKBAR: User successfully logged in");
+      navigate("/");
+    }
+    dispatch(reset());
+  }, [user, isError, isSuccess, dispatch, navigate]);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <ThemeProvider theme={theme}>

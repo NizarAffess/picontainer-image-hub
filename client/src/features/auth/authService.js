@@ -17,6 +17,18 @@ const registerUser = async (userData) => {
   }
 };
 
+const loginUser = async (userData) => {
+  try {
+    const response = await axios.post(`${apiURL}/user/login`, userData);
+    if (response.data) {
+      localStorage.setItem("user", JSON.stringify(response.data));
+    }
+    return response.data;
+  } catch (error) {
+    console.log("Error while logging user: ", error);
+  }
+};
+
 const logout = () => {
   localStorage.removeItem("user");
 };
@@ -24,5 +36,6 @@ const logout = () => {
 const authService = {
   registerUser,
   logout,
+  loginUser,
 };
 export default authService;

@@ -14,14 +14,13 @@ const Navbar = () => {
   const logoutHandler = (title) => {
     if (title === "Logout") {
       dispatch(logout());
-      dispatch(reset());
     } else {
       return null;
     }
   };
 
   useEffect(() => {
-    const pages = [
+    const pagesList = [
       { title: "Home", endpoint: "/" },
       { title: "Upload", endpoint: "/image/upload" },
       { title: "Images", endpoint: "/images" },
@@ -32,9 +31,9 @@ const Navbar = () => {
             { title: "Sign in", endpoint: "/login" },
           ]),
     ];
-    setPages(pages);
-    console.log(pages);
-  }, [user]);
+    setPages([...pagesList]);
+    dispatch(reset());
+  }, [user, dispatch]);
 
   return (
     <Container
