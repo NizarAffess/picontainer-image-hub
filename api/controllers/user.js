@@ -19,7 +19,7 @@ const registerUser = async (req, res) => {
     if (user) {
       const { username, email, _id } = user._doc;
       res.status(201).json({
-        message: `${user.username} successfully created`,
+        message: `${user.username} successfully registered`,
         user: {
           username,
           email,
