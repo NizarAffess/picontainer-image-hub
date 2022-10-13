@@ -2,16 +2,40 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
-
-const pages = [
-  { title: "Home", endpoint: "/" },
-  { title: "Upload", endpoint: "/image/upload" },
-  { title: "Images", endpoint: "/images" },
-  { title: "Sign Up", endpoint: "/register" },
-  { title: "Sign in", endpoint: "/login" },
-];
+import { useDispatch, useSelector } from "react-redux";
+import { logout, reset } from "../features/auth/authSlice";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  const [pages, setPages] = useState([]);
+
+  const logoutHandler = (title) => {
+    if (title === "Logout") {
+      dispatch(logout());
+      dispatch(reset());
+    } else {
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    const pages = [
+      { title: "Home", endpoint: "/" },
+      { title: "Upload", endpoint: "/image/upload" },
+      { title: "Images", endpoint: "/images" },
+      ...(user
+        ? [{ title: "Logout", endpoint: "/" }]
+        : [
+            { title: "Sign Up", endpoint: "/register" },
+            { title: "Sign in", endpoint: "/login" },
+          ]),
+    ];
+    setPages(pages);
+    console.log(pages);
+  }, [user]);
+
   return (
     <Container
       position="static"
@@ -32,6 +56,7 @@ const Navbar = () => {
                 mx: 1,
                 textTransform: "capitalize",
               }}
+              onClick={() => logoutHandler(page.title)}
             >
               {page.title}
             </Button>
