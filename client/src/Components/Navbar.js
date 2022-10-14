@@ -25,7 +25,7 @@ const Navbar = () => {
       { title: "Upload", endpoint: "/image/upload" },
       { title: "Images", endpoint: "/images" },
       ...(user
-        ? [{ title: "Logout", endpoint: "/" }]
+        ? [{ title: "Logout", endpoint: "/login" }]
         : [
             { title: "Sign Up", endpoint: "/register" },
             { title: "Sign in", endpoint: "/login" },
