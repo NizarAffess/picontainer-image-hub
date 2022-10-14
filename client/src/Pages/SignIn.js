@@ -48,10 +48,10 @@ const SignIn = () => {
     }
     if (isSuccess || user) {
       console.log("SNACKBAR: User successfully logged in");
-      navigate("/");
+      navigate("/", { state: { open: true, message: message } });
     }
     dispatch(reset());
-  }, [user, isError, isSuccess, dispatch, navigate]);
+  }, [user, isError, isSuccess, message, dispatch, navigate]);
 
   if (isLoading) {
     return <Spinner />;
