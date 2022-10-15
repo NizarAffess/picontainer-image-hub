@@ -1,4 +1,4 @@
-import { Box, Snackbar } from "@mui/material";
+import { Box, IconButton, Snackbar } from "@mui/material";
 import { Container } from "@mui/material/";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -15,11 +15,22 @@ const Home = () => {
     setSnack(false);
   };
 
+  const action = (
+    <IconButton
+      size="small"
+      aria-label="close"
+      color="inherit"
+      onClick={handleClose}
+    >
+      X
+    </IconButton>
+  );
+
   useEffect(() => {
     if (location?.state?.open) {
       setSnack(true);
     }
-  }, []);
+  }, [location]);
 
   return (
     <Container>
@@ -27,10 +38,10 @@ const Home = () => {
         <h1>Home page</h1>
         <Snackbar
           open={snack}
-          autoHideDuration={3000}
+          autoHideDuration={5000}
           onClose={handleClose}
           message={message}
-          // action={action}
+          action={action}
         />
       </Box>
     </Container>
