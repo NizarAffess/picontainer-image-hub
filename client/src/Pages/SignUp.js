@@ -38,10 +38,10 @@ const SignUp = () => {
     if (isSuccess || user) {
       // user might/not be removed here
       console.log("SNACKBAR: User Successfully registered");
-      navigate("/");
+      navigate("/", { state: { open: true, message } });
     }
     dispatch(reset());
-  }, [isError, user, isSuccess, navigate, dispatch]);
+  }, [isError, user, isSuccess, message, navigate, dispatch]);
 
   const handleChange = (e) => {
     setFormData((formData) => ({
