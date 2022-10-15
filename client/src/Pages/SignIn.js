@@ -71,7 +71,7 @@ const SignIn = () => {
         >
           <Avatar sx={{ m: 1, bgcolor: "primary.main" }}></Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Sign In
           </Typography>
           <Box
             component="form"
@@ -111,7 +111,7 @@ const SignIn = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              Sign In
             </Button>
             <Grid container>
               <Grid item xs>
@@ -121,7 +121,7 @@ const SignIn = () => {
               </Grid>
               <Grid item>
                 <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                  {"Don't have an account? Sign In"}
                 </Link>
               </Grid>
             </Grid>
