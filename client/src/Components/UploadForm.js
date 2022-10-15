@@ -5,8 +5,9 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createImage, reset } from "../features/auth/images/imageSlice";
+import { createImage, reset } from "../features/images/imageSlice";
 import Spinner from "./Spinner";
+import { useNavigate } from "react-router-dom";
 
 const UploadForm = (props) => {
   const [formData, setFormData] = useState({
@@ -19,6 +20,7 @@ const UploadForm = (props) => {
     (state) => state.images
   );
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -38,9 +40,10 @@ const UploadForm = (props) => {
     }
     if (isSuccess) {
       console.log("SNACKBAR: Image successfully created");
+      navigate("/images", { state: { open: true, message } });
     }
-    // dispatch(reset());
-  }, [isError, isSuccess, dispatch]);
+    dispatch(reset());
+  }, [isError, isSuccess, dispatch, navigate, message]);
 
   if (isLoading) {
     return <Spinner />;
