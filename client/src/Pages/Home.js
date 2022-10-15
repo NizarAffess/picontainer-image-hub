@@ -7,7 +7,6 @@ import { useLocation } from "react-router-dom";
 const Home = () => {
   const { message } = useSelector((state) => state.auth.user);
   const location = useLocation();
-  const { open } = location.state;
   const [snack, setSnack] = useState(false);
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -17,7 +16,7 @@ const Home = () => {
   };
 
   useEffect(() => {
-    if (open) {
+    if (location?.state?.open) {
       setSnack(true);
     }
   }, []);
