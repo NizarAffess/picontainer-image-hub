@@ -16,6 +16,7 @@ const UploadForm = (props) => {
   });
   const { title, description } = formData;
 
+  const { user } = useSelector((state) => state.auth);
   const { isError, isLoading, isSuccess, message } = useSelector(
     (state) => state.images
   );
@@ -38,12 +39,17 @@ const UploadForm = (props) => {
     if (isError) {
       console.log("SNACKBAR: Error while creating image");
     }
+
+    if (!user) {
+      navigate("/login");
+    }
+
     if (isSuccess) {
       console.log("SNACKBAR: Image successfully created");
       navigate("/images", { state: { open: true, message } });
     }
     dispatch(reset());
-  }, [isError, isSuccess, dispatch, navigate, message]);
+  }, [isError, isSuccess, user, dispatch, navigate, message]);
 
   if (isLoading) {
     return <Spinner />;
