@@ -9,6 +9,7 @@ const createImage = async (req, res) => {
     if (!req.body.title) {
       res.status(400).json({ message: "Please add an image title" });
     }
+    req.body.url = req.file.path;
     const { title, description, url } = req.body;
     const image = await Image.create({
       title,
