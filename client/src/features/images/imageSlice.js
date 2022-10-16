@@ -9,7 +9,7 @@ const initialState = {
   message: "",
 };
 
-export const createImage = createAsyncThunk(
+const createImage = createAsyncThunk(
   "/image/create",
   async (imageData, thunkAPI) => {
     try {
@@ -26,6 +26,19 @@ export const createImage = createAsyncThunk(
     }
   }
 );
+
+const getImages = createAsyncThunk("/images", async (_, thunkAPI) => {
+  try {
+    const { token } = thunkAPI.getState().auth.user.user;
+    return await imagesService.getImages(token);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
 
 const imageSlice = createSlice({
   name: "image",
@@ -47,9 +60,23 @@ const imageSlice = createSlice({
         state.isSuccess = false;
         state.isError = true;
         state.message = action.payload;
+      })
+      .addCase(getImages.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getImages.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.images = action.payload;
+      })
+      .addCase(getImages.rejected, (state, action) => {
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action.payload;
       });
   },
 });
 
 export const { reset } = imageSlice.actions;
+export { createImage, getImages };
 export default imageSlice.reducer;
