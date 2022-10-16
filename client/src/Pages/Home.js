@@ -5,7 +5,9 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 
 const Home = () => {
-  const { message } = useSelector((state) => state.auth.user);
+  const { message } = useSelector((state) =>
+    state.auth.user ? state.auth.user : ""
+  );
   const location = useLocation();
   const [snack, setSnack] = useState(false);
   const handleClose = (event, reason) => {
