@@ -1,0 +1,15 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.image-title {
+  opacity: 0;
+  transition: .2s ease-in-out;
+  background: transparent !important;
+}
+
+.image-item:hover .image-title {
+  opacity: 1;
+}
