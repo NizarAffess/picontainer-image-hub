@@ -65,7 +65,7 @@ const Navbar = () => {
             <IconButton
               onClick={handleClick}
               size="small"
-              sx={{ position: "absolute", top: "7px", right: "30px" }}
+              sx={{ position: "absolute", top: "7px", right: "50px" }}
               aria-controls={open ? "account-menu" : undefined}
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
@@ -80,6 +80,7 @@ const Navbar = () => {
           <AccountMenu
             handleLogout={handleLogout}
             open={open}
+            anchorEl={anchorEl}
             handleClick={handleClick}
             handleClose={handleClose}
           />

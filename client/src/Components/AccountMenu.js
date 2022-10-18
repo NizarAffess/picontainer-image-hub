@@ -13,7 +13,7 @@ const AccountMenu = (props) => {
       open={props.open}
       onClose={props.handleClose}
       onClick={props.handleClose}
-      sx={{ top: -45 }}
+      sx={{ ml: "12px" }}
       PaperProps={{
         elevation: 0,
         sx: {
