@@ -5,6 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 // import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 // import Logout from "@mui/icons-material/Logout";
 import Divider from "@mui/material/Divider";
+import { Link } from "react-router-dom";
 const AccountMenu = (props) => {
   return (
     <Menu
@@ -43,9 +44,11 @@ const AccountMenu = (props) => {
       transformOrigin={{ horizontal: "right", vertical: "top" }}
       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
     >
-      <MenuItem>
-        <Avatar /> Profile
-      </MenuItem>
+      <Link to="/user/profile">
+        <MenuItem>
+          <Avatar /> Profile
+        </MenuItem>
+      </Link>
       <MenuItem>
         <Avatar /> My account
       </MenuItem>
