@@ -2,7 +2,7 @@ import { Box, Container, Grid, Typography } from "@mui/material";
 
 const Profile = () => {
   return (
-    <Container sx={{ width: "100vw" }}>
+    <Container className="profile-container">
       <Box
         sx={{
           width: "100%",
