@@ -15,6 +15,11 @@
   opacity: 1;
 }
 
+.account-link {
+  text-decoration: none ;
+  color: inherit;
+}
+
 .profile-container {
   padding: 0;
 }

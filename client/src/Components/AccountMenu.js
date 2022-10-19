@@ -44,21 +44,25 @@ const AccountMenu = (props) => {
       transformOrigin={{ horizontal: "right", vertical: "top" }}
       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
     >
-      <Link to="/user/profile">
+      <Link className="account-link" to="/user/profile">
         <MenuItem>
           <Avatar /> Profile
         </MenuItem>
       </Link>
-      <MenuItem>
-        <Avatar /> My account
-      </MenuItem>
+      <Link className="account-link" to="/user/account">
+        <MenuItem>
+          <Avatar /> My account
+        </MenuItem>
+      </Link>
       <Divider />
-      <MenuItem>
-        {/* <ListItemIcon>
+      <Link className="account-link" to="/user/saved-items">
+        <MenuItem>
+          {/* <ListItemIcon>
           <BookmarkBorderIcon fontSize="small" />
         </ListItemIcon> */}
-        Saved images
-      </MenuItem>
+          Saved images
+        </MenuItem>
+      </Link>
       <MenuItem onClick={props.handleLogout}>
         {/* <ListItemIcon>
           <Logout fontSize="small" />
