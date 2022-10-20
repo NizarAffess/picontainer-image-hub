@@ -81,8 +81,14 @@ const addProfileInfo = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
     if (user) {
-      if (req.file) {
-        req.body.photo = req.file.path;
+      if (req.files) {
+        if (req.files.photo) {
+          req.body.photo = req.files.photo[0].path;
+        }
+        if (req.files.coverPhoto) {
+          req.body.coverPhoto = req.files.coverPhoto[0].path;
+        }
+        console.log(req.files);
       }
       const updatedUser = await User.findByIdAndUpdate(req.user.id, req.body, {
         new: true,
