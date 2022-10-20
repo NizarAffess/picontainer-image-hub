@@ -4,6 +4,7 @@ import {
   Button,
   Container,
   Grid,
+  TextField,
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -25,6 +26,21 @@ const Profile = () => {
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
+
+  const [formData, setFormData] = useState({
+    about: "",
+    address: "",
+  });
+  const { about, address } = formData;
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const saveProfileInfo = () => {};
 
   useEffect(() => {
     if (!file) {
@@ -116,10 +132,45 @@ const Profile = () => {
           <Grid item sx={{ mx: 4, maxWidth: "450px" }}>
             <Typography component="div" sx={{ mb: 1 }}>
               <Typography variant="h6">About</Typography>
-              {profile.bio}
+              {profile.bio ? (
+                profile.bio
+              ) : (
+                <TextField
+                  margin="normal"
+                  fullWidth
+                  value={formData?.about || ""}
+                  multiline
+                  rows={3}
+                  label="Tell others a bit about yourself"
+                  name="about"
+                  onChange={handleChange}
+                />
+              )}
             </Typography>
-            <Typography variant="h6">Address</Typography>
-            <Typography component="p">{profile.address}</Typography>
+            <Typography component="div" sx={{ mb: 1 }}>
+              <Typography variant="h6">Address</Typography>
+              {profile.address ? (
+                profile.address
+              ) : (
+                <TextField
+                  margin="normal"
+                  fullWidth
+                  value={formData?.address || ""}
+                  label="Where do you live?"
+                  name="address"
+                  onChange={handleChange}
+                />
+              )}
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Button
+              onClick={saveProfileInfo}
+              variant="contained"
+              sx={{ bgcolor: "text.primary", textTransform: "capitalize" }}
+            >
+              Save
+            </Button>
           </Grid>
         </Grid>
       ) : (
