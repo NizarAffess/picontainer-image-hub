@@ -25,9 +25,14 @@ const Profile = () => {
   );
 
   const [file, setFile] = useState(null);
+  const [coverFile, setCoverFile] = useState(null);
   const [preview, setPreview] = useState(null);
+  const [coverPreview, setCoverPreview] = useState(null);
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
+  };
+  const handleCoverFileChange = (e) => {
+    setCoverFile(e.target.files[0]);
   };
 
   const [formData, setFormData] = useState({
@@ -48,6 +53,9 @@ const Profile = () => {
     if (file) {
       profileData.append("photo", file);
     }
+    if (coverFile) {
+      profileData.append("coverPhoto", coverFile);
+    }
     profileData.append("bio", about && about);
     profileData.append("address", address && address);
     dispatch(addProfileInfo(profileData));
@@ -58,10 +66,19 @@ const Profile = () => {
       setPreview("");
       return;
     }
+    if (!coverFile) {
+      setCoverPreview("");
+      return;
+    }
     const objectUrl = URL.createObjectURL(file);
     setPreview(objectUrl);
-    return () => URL.revokeObjectURL(objectUrl);
-  }, [file]);
+    const objectUrlCover = URL.createObjectURL(coverFile);
+    setCoverPreview(objectUrlCover);
+    return () => {
+      URL.revokeObjectURL(objectUrl);
+      URL.revokeObjectURL(objectUrlCover);
+    };
+  }, [file, coverFile]);
 
   useEffect(() => {
     if (isError) {
@@ -88,11 +105,40 @@ const Profile = () => {
           overflowY: "hidden",
         }}
       >
-        <img
-          src="/test-assets/cover-photo-1.jpg"
-          alt="profile cover"
-          loading="lazy"
-        />
+        {profile.coverPhoto ? (
+          <img src={profile.coverPhoto} alt="profile cover" loading="lazy" />
+        ) : (
+          <Box sx={{ position: "relative", textAlign: "center" }}>
+            <img
+              style={{ height: "300px", width: "100%" }}
+              src={coverFile ? coverPreview : "/test-assets/wide-cover.jpg"}
+              alt="profile cover"
+              loading="lazy"
+            />
+            <Button
+              sx={{
+                bgcolor: "text.primary",
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                display: coverFile ? "none" : "block",
+              }}
+              variant="contained"
+              component="label"
+            >
+              {/* <UploadFile sx={{ mr: 1 }} /> */}
+              Upload
+              <input
+                hidden
+                onChange={handleCoverFileChange}
+                accept="image/*"
+                type="file"
+                required
+              />
+            </Button>
+          </Box>
+        )}
       </Box>
       {profile ? (
         <Grid container rowSpacing={2} columnSpacing={3} sx={{ m: 2 }}>
@@ -108,7 +154,7 @@ const Profile = () => {
               <Box sx={{ position: "relative" }}>
                 <Avatar
                   sx={{ width: 200, height: 200 }}
-                  src={file ? preview : ""}
+                  src={file ? preview : "/test-assets/user-photo-1.jpg"}
                   alt="profile"
                   loading="lazy"
                 />
