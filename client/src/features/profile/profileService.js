@@ -17,8 +17,28 @@ const getProfile = async (token) => {
   }
 };
 
+const addProfileInfo = async (token, profileData) => {
+  try {
+    const config = {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    };
+    const response = await axios.put(
+      `${apiURL}/user/profile`,
+      profileData,
+      config
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.log("Error while adding user data: ", error);
+  }
+};
+
 const profileService = {
   getProfile,
+  addProfileInfo,
 };
 
 export default profileService;

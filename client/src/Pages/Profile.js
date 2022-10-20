@@ -10,7 +10,10 @@ import {
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getUserProfile } from "../features/profile/profileSlice";
+import {
+  addProfileInfo,
+  getUserProfile,
+} from "../features/profile/profileSlice";
 import Spinner from "../Components/Spinner";
 
 const Profile = () => {
@@ -40,7 +43,15 @@ const Profile = () => {
     });
   };
 
-  const saveProfileInfo = () => {};
+  const saveProfileInfo = async () => {
+    const profileData = new FormData();
+    if (file) {
+      profileData.append("photo", file);
+    }
+    profileData.append("bio", about && about);
+    profileData.append("address", address && address);
+    dispatch(addProfileInfo(profileData));
+  };
 
   useEffect(() => {
     if (!file) {
