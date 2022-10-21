@@ -46,11 +46,12 @@ const AccountMenu = (props) => {
     >
       <Link className="account-link" to="/user/profile">
         <MenuItem>
-          <Avatar /> Profile
+          <Avatar src={props.photo} /> Profile
         </MenuItem>
       </Link>
       <Link className="account-link" to="/user/account">
         <MenuItem>
+          {/* <AdminPanelSettingsIcon /> */}
           <Avatar /> My account
         </MenuItem>
       </Link>
