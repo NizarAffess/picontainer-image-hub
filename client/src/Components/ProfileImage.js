@@ -14,7 +14,7 @@ const ProfileImage = ({ profile, file, preview, handleFileChange }) => {
         <Box sx={{ position: "relative" }}>
           <Avatar
             sx={{ width: 200, height: 200 }}
-            src={file ? preview : "/test-assets/user-photo-1.jpg"}
+            src={preview}
             alt="profile"
             loading="lazy"
           />
