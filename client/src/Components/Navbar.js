@@ -19,7 +19,6 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
-  const { photo } = useSelector((state) => state.profile.profile);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -71,7 +70,7 @@ const Navbar = () => {
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
             >
-              <Avatar src={photo} sx={{ width: 32, height: 32 }} />
+              <Avatar src={user.user.photo} sx={{ width: 32, height: 32 }} />
             </IconButton>
           )}
         </>
@@ -84,7 +83,7 @@ const Navbar = () => {
             anchorEl={anchorEl}
             handleClick={handleClick}
             handleClose={handleClose}
-            photo={photo}
+            photo={user.user.photo}
           />
         )}
       </Box>
