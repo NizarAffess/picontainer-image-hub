@@ -19,6 +19,7 @@ import Spinner from "../Components/Spinner";
 const Profile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isDisabled, setIsDisabled] = useState(true);
   const { user } = useSelector((state) => state.auth);
   const { profile, isError, isLoading, message } = useSelector(
     (state) => state.profile
@@ -30,9 +31,15 @@ const Profile = () => {
   const [coverPreview, setCoverPreview] = useState(null);
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
+    if (isDisabled) {
+      setIsDisabled(false);
+    }
   };
   const handleCoverFileChange = (e) => {
     setCoverFile(e.target.files[0]);
+    if (isDisabled) {
+      setIsDisabled(false);
+    }
   };
 
   const [formData, setFormData] = useState({
@@ -46,6 +53,9 @@ const Profile = () => {
       ...formData,
       [e.target.name]: e.target.value,
     });
+    if (isDisabled) {
+      setIsDisabled(false);
+    }
   };
 
   const saveProfileInfo = async () => {
@@ -225,6 +235,7 @@ const Profile = () => {
               onClick={saveProfileInfo}
               variant="contained"
               sx={{ bgcolor: "text.primary", textTransform: "capitalize" }}
+              disabled={isDisabled}
             >
               Save
             </Button>
