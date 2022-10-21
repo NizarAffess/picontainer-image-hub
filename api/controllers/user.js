@@ -41,7 +41,7 @@ const loginUser = async (req, res) => {
       res.status(400).json({ message: "No user found with this email" });
       return;
     }
-    const { username, email, password, _id } = user._doc;
+    const { username, email, password, _id, photo } = user._doc;
     const comparedPassword = await bcrypt.compare(req.body.password, password);
     if (user && comparedPassword) {
       res.status(200).json({
@@ -50,6 +50,7 @@ const loginUser = async (req, res) => {
           username,
           email,
           _id,
+          photo,
           token: generateToken(_id),
         },
       });
