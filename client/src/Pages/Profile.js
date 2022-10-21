@@ -114,13 +114,14 @@ const Profile = () => {
           width: "100%",
           height: "auto",
           maxHeight: "300px",
+          textAlign: "center",
           overflowY: "hidden",
         }}
       >
         {profile.coverPhoto ? (
           <img src={profile.coverPhoto} alt="profile cover" loading="lazy" />
         ) : (
-          <Box sx={{ position: "relative", textAlign: "center" }}>
+          <Box sx={{ position: "relative" }}>
             <img
               style={{ height: "300px", width: "100%" }}
               src={coverFile ? coverPreview : "/test-assets/wide-cover.jpg"}
