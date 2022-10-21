@@ -72,18 +72,20 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    if (!file) {
-      setPreview("");
-      return;
+    let objectUrl;
+    if (file) {
+      objectUrl = URL.createObjectURL(file);
+      setPreview(objectUrl);
+    } else {
+      setPreview(null);
     }
-    if (!coverFile) {
-      setCoverPreview("");
-      return;
+    let objectUrlCover;
+    if (coverFile) {
+      objectUrlCover = URL.createObjectURL(coverFile);
+      setCoverPreview(objectUrlCover);
+    } else {
+      setCoverPreview(null);
     }
-    const objectUrl = URL.createObjectURL(file);
-    setPreview(objectUrl);
-    const objectUrlCover = URL.createObjectURL(coverFile);
-    setCoverPreview(objectUrlCover);
     return () => {
       URL.revokeObjectURL(objectUrl);
       URL.revokeObjectURL(objectUrlCover);
