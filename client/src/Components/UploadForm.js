@@ -16,7 +16,7 @@ const UploadForm = (props) => {
         }}
       >
         <Typography component="h1" variant="h5">
-          Upload New Image
+          {props.heading}
         </Typography>
         <Box
           component="form"

@@ -66,6 +66,7 @@ const UploadImage = () => {
       handleFileChange={handleFileChange}
       submitImage={submitImage}
       formData={formData}
+      heading="Upload New Image"
     >
       Submit
     </UploadForm>
