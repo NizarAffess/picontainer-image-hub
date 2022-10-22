@@ -10,6 +10,7 @@ import Spinner from "./Spinner";
 import { useNavigate } from "react-router-dom";
 
 const UploadForm = (props) => {
+  const [file, setFile] = useState(null);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -30,9 +31,17 @@ const UploadForm = (props) => {
     });
   };
 
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
   const submitImage = async (e) => {
     e.preventDefault();
-    dispatch(createImage({ title, description }));
+    const imageData = new FormData();
+    imageData.append("title", title);
+    imageData.append("description", description);
+    imageData.append("url", file);
+    dispatch(createImage(imageData));
   };
 
   useEffect(() => {
@@ -88,6 +97,22 @@ const UploadForm = (props) => {
             name="description"
             onChange={handleChange}
           />
+          <Button
+            sx={{ bgcolor: "text.primary", mt: 2, p: 1 }}
+            variant="contained"
+            fullWidth
+            component="label"
+          >
+            {/* <UploadFile sx={{ mr: 1 }} /> */}
+            Upload Image
+            <input
+              hidden
+              onChange={handleFileChange}
+              accept="image/*"
+              type="file"
+              required
+            />
+          </Button>
           <br />
           <Button
             type="submit"

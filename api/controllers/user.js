@@ -41,7 +41,7 @@ const loginUser = async (req, res) => {
       res.status(400).json({ message: "No user found with this email" });
       return;
     }
-    const { username, email, password, _id } = user._doc;
+    const { username, email, password, _id, photo } = user._doc;
     const comparedPassword = await bcrypt.compare(req.body.password, password);
     if (user && comparedPassword) {
       res.status(200).json({
@@ -50,6 +50,7 @@ const loginUser = async (req, res) => {
           username,
           email,
           _id,
+          photo,
           token: generateToken(_id),
         },
       });
@@ -77,10 +78,37 @@ const getProfile = async (req, res) => {
   }
 };
 
+const addProfileInfo = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (user) {
+      if (req.files) {
+        if (req.files.photo) {
+          req.body.photo = req.files.photo[0].path;
+        }
+        if (req.files.coverPhoto) {
+          req.body.coverPhoto = req.files.coverPhoto[0].path;
+        }
+        console.log(req.files);
+      }
+      const updatedUser = await User.findByIdAndUpdate(req.user.id, req.body, {
+        new: true,
+      });
+      const { password, ...rest } = updatedUser._doc;
+      res.status(200).json(rest);
+      return;
+    }
+    res.status(400).json({ message: "No user found" });
+  } catch (error) {
+    console.log("Error while adding profile information: ", error);
+    res.status(500).json(error);
+  }
+};
+
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: "2d",
   });
 };
 
-module.exports = { registerUser, loginUser, getProfile };
+module.exports = { registerUser, loginUser, getProfile, addProfileInfo };

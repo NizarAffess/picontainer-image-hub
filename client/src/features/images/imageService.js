@@ -34,5 +34,19 @@ const getImages = async (token) => {
   }
 };
 
-const imagesService = { createImage, getImages };
+const getImage = async (token, id) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const response = await axios.get(`${apiURL}/image/${id}`, config);
+    return response.data;
+  } catch (error) {
+    console.log("Error while getting image: ", error);
+  }
+};
+
+const imagesService = { createImage, getImages, getImage };
 export default imagesService;

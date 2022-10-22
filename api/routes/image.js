@@ -7,12 +7,13 @@ const {
   getImages,
 } = require("../controllers/image");
 const { protect } = require("../middleware/auth");
+const upload = require("../middleware/cloudinary");
 const router = require("express").Router();
 
 router.get("/", protect, getCreateRoute);
 router.get("/images", protect, getImages);
 router.get("/image/:id", protect, getImage);
-router.post("/image/create", protect, createImage);
+router.post("/image/create", protect, upload.single("url"), createImage);
 router.put("/image/:id", protect, updateImage);
 router.delete("/image/:id", protect, deleteImage);
 
