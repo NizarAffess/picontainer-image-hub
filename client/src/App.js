@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Navbar from "./Components/Navbar";
 import UploadForm from "./Components/UploadForm";
+import Account from "./Pages/Account";
 import Home from "./Pages/Home";
 import Image from "./Pages/Image";
 import Images from "./Pages/Images";
@@ -23,6 +24,7 @@ function App() {
           <Route path="/register" element={<SignUp />} />
           <Route path="/login" element={<SignIn />} />
           <Route path="/user/profile" element={<Profile />} />
+          <Route path="/user/account" element={<Account />} />
         </Routes>
       </Router>
     </div>
