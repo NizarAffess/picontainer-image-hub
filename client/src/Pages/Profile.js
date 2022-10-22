@@ -61,8 +61,12 @@ const Profile = () => {
     if (coverFile) {
       profileData.append("coverPhoto", coverFile);
     }
-    profileData.append("bio", about && about);
-    profileData.append("address", address && address);
+    if (about) {
+      profileData.append("bio", about);
+    }
+    if (address) {
+      profileData.append("address", address);
+    }
     dispatch(addProfileInfo(profileData));
   };
 
