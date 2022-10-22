@@ -53,6 +53,19 @@ const getImage = createAsyncThunk("/image/:id", async (id, thunkAPI) => {
   }
 });
 
+const deleteImage = createAsyncThunk("/image/:id", async (id, thunkAPI) => {
+  try {
+    const { token } = thunkAPI.getState().auth.user.user;
+    return await imagesService.deleteImage(token, id);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
 const imageSlice = createSlice({
   name: "image",
   initialState,
@@ -104,5 +117,5 @@ const imageSlice = createSlice({
 });
 
 export const { reset } = imageSlice.actions;
-export { createImage, getImages, getImage };
+export { createImage, getImages, getImage, deleteImage };
 export default imageSlice.reducer;

@@ -48,5 +48,19 @@ const getImage = async (token, id) => {
   }
 };
 
-const imagesService = { createImage, getImages, getImage };
+const deleteImage = async (token, id) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const response = await axios.delete(`${apiURL}/image/${id}`, config);
+    return response.data;
+  } catch (error) {
+    console.log("Error while deleting image: ", error);
+  }
+};
+
+const imagesService = { createImage, getImages, getImage, deleteImage };
 export default imagesService;
