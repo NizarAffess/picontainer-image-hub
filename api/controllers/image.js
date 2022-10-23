@@ -35,6 +35,9 @@ const updateImage = async (req, res) => {
       res.status(401).json({ message: "User not authorized" });
       return;
     }
+    if (req.file) {
+      req.body.url = req.file.path;
+    }
     const updatedImage = await Image.findByIdAndUpdate(
       req.params.id,
       req.body,
