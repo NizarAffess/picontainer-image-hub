@@ -53,7 +53,7 @@ const getImage = createAsyncThunk("/image/:id", async (id, thunkAPI) => {
   }
 });
 
-const deleteImage = createAsyncThunk("/image/:id", async (id, thunkAPI) => {
+const deleteImage = createAsyncThunk("/image/delete", async (id, thunkAPI) => {
   try {
     const { token } = thunkAPI.getState().auth.user.user;
     return await imagesService.deleteImage(token, id);
@@ -101,6 +101,21 @@ const imageSlice = createSlice({
         state.images.push(action.payload);
       })
       .addCase(createImage.rejected, (state, action) => {
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(deleteImage.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteImage.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.images = state.images.filter(
+          (image) => image._id !== action.payload.id
+        );
+      })
+      .addCase(deleteImage.rejected, (state, action) => {
         state.isSuccess = false;
         state.isError = true;
         state.message = action.payload;
