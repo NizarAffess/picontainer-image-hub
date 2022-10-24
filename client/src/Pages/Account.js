@@ -31,10 +31,10 @@ const Account = () => {
   const [formData, setFormData] = useState({
     username: profile.username,
     email: profile.email,
-    about: profile.about,
+    bio: profile.bio,
     address: profile.address,
   });
-  const { username, email, about, address } = formData;
+  const { username, email, bio, address } = formData;
 
   const handleChange = (e) => {
     setFormData({
@@ -47,7 +47,7 @@ const Account = () => {
     const profileData = new FormData();
     profileData.append("username", username && username);
     profileData.append("email", email && email);
-    profileData.append("bio", about && about);
+    profileData.append("bio", bio && bio);
     profileData.append("address", address && address);
     dispatch(addProfileInfo(profileData));
     navigate("/user/profile");
@@ -118,11 +118,11 @@ const Account = () => {
                 <TextField
                   margin="normal"
                   fullWidth
-                  value={about}
+                  value={bio}
                   multiline
                   rows={3}
                   label="Tell others a bit about yourself"
-                  name="about"
+                  name="bio"
                   onChange={handleChange}
                 />
               </Grid>
