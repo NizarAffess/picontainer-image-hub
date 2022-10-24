@@ -1,18 +1,8 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  Container,
-  createTheme,
-  CssBaseline,
-  Grid,
-  TextField,
-  ThemeProvider,
-  Typography,
-} from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import AccountForm from "../Components/AccountForm";
 import Spinner from "../Components/Spinner";
 import {
   addProfileInfo,
@@ -70,88 +60,11 @@ const Account = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "text.primary" }}></Avatar>
-          <Typography component="h1" variant="h5">
-            Account
-          </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={saveProfileInfo}
-            sx={{ mt: 3 }}
-          >
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  onChange={handleChange}
-                  id="username"
-                  value={username}
-                  label="username"
-                  name="username"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  onChange={handleChange}
-                  id="email"
-                  value={email}
-                  label="Email Address"
-                  name="email"
-                  type="email"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  margin="normal"
-                  fullWidth
-                  value={bio}
-                  multiline
-                  rows={3}
-                  label="Tell others a bit about yourself"
-                  name="bio"
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  margin="normal"
-                  fullWidth
-                  value={address}
-                  label="Where do you live?"
-                  name="address"
-                  onChange={handleChange}
-                />
-              </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              variant="contained"
-              fullWidth
-              sx={{
-                bgcolor: "text.primary",
-                textTransform: "capitalize",
-                my: 2,
-              }}
-            >
-              Save
-            </Button>
-          </Box>
-        </Box>
-      </Container>
+      <AccountForm
+        saveProfileInfo={saveProfileInfo}
+        handleChange={handleChange}
+        formData={formData}
+      />
     </ThemeProvider>
   );
 };
