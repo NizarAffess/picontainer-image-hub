@@ -1,4 +1,5 @@
 const Image = require("../models/image");
+const User = require("../models/user");
 
 const getCreateRoute = (req, res) => {
   res.status(200).json({ message: "Create image page" });
@@ -98,6 +99,31 @@ const getImages = async (req, res) => {
   }
 };
 
+const saveImage = async (req, res) => {
+  try {
+    const image = await Image.findById(req.params.id);
+    if (!image) {
+      res.status(400).json({ message: "No image found" });
+    }
+    const user = await User.findById(req.user.id);
+    if (!user.saved.includes(req.params.id)) {
+      await user.updateOne({ $push: { saved: req.params.id } });
+      res
+        .status(200)
+        .json({ message: "image has been saved", imageId: req.params.id });
+      return;
+    }
+    await user.updateOne({ $pull: { saved: req.params.id } });
+    res
+      .status(200)
+      .json({ message: "image has been unsaved", imageId: req.params.id });
+    return;
+  } catch (error) {
+    console.log("Error while saving image: ", error);
+    res.status(500).json(error);
+  }
+};
+
 module.exports = {
   createImage,
   getCreateRoute,
@@ -105,4 +131,5 @@ module.exports = {
   deleteImage,
   getImage,
   getImages,
+  saveImage,
 };
