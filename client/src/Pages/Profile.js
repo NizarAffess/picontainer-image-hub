@@ -38,10 +38,10 @@ const Profile = () => {
   };
 
   const [formData, setFormData] = useState({
-    about: "",
-    address: "",
+    bio: profile.bio ? profile.bio : "",
+    address: profile.address ? profile.address : "",
   });
-  const { about, address } = formData;
+  const { bio, address } = formData;
 
   const handleChange = (e) => {
     setFormData({
@@ -55,18 +55,10 @@ const Profile = () => {
 
   const saveProfileInfo = async () => {
     const profileData = new FormData();
-    if (file) {
-      profileData.append("photo", file);
-    }
-    if (coverFile) {
-      profileData.append("coverPhoto", coverFile);
-    }
-    if (about) {
-      profileData.append("bio", about);
-    }
-    if (address) {
-      profileData.append("address", address);
-    }
+    if (file) profileData.append("photo", file);
+    if (coverFile) profileData.append("coverPhoto", coverFile);
+    if (bio) profileData.append("bio", bio);
+    if (address) profileData.append("address", address);
     dispatch(addProfileInfo(profileData));
   };
 
