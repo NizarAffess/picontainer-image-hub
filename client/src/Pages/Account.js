@@ -7,6 +7,7 @@ import Spinner from "../Components/Spinner";
 import {
   addProfileInfo,
   getUserProfile,
+  reset,
 } from "../features/profile/profileSlice";
 
 const theme = createTheme();
@@ -52,6 +53,9 @@ const Account = () => {
     }
     dispatch(getUserProfile(user.user.token));
     console.log(user);
+    return () => {
+      dispatch(reset());
+    };
   }, [isError, message, user, dispatch, navigate]);
 
   if (isLoading) {
