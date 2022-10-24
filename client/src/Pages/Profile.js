@@ -10,6 +10,8 @@ import Spinner from "../Components/Spinner";
 import CoverImage from "../Components/CoverImage";
 import ProfileImage from "../Components/ProfileImage";
 import ProfileInfo from "../Components/ProfileInfo";
+import Images from "./Images";
+import ProfileTabs from "../Components/ProfileTabs";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -133,6 +135,7 @@ const Profile = () => {
       ) : (
         <Typography>No data Found!</Typography>
       )}
+      <ProfileTabs images={<Images />} />
     </Container>
   );
 };
