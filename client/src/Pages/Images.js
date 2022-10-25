@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Image from "../Components/Image";
 import Spinner from "../Components/Spinner";
 import { getImages, reset } from "../features/images/imageSlice";
+import { saveImage } from "../features/profile/profileSlice";
 
 const Images = () => {
   const dispatch = useDispatch();
@@ -14,6 +15,10 @@ const Images = () => {
   const { images, isError, isLoading, message } = useSelector(
     (state) => state.images
   );
+
+  const saveItem = (id) => {
+    dispatch(saveImage({ imageId: id }));
+  };
 
   useEffect(() => {
     if (isError) {
@@ -42,6 +47,7 @@ const Images = () => {
           <IconButton
             aria-label={`save ${image.title}`}
             className="image-title image-save"
+            onClick={() => saveItem(image._id)}
           >
             {/* <BookmarkBorderIcon aria-label="save" /> 
             <BookmarkIcon aria-label="unsave" /> */}
