@@ -106,19 +106,19 @@ const saveImage = async (req, res) => {
       res.status(400).json({ message: "No image found" });
     }
     const user = await User.findById(req.user.id);
-    if (!user.saved.includes(req.body.imageId)) {
-      await user.updateOne({ $push: { saved: req.body.imageId } });
+    if (!user.saved.some((image) => image._id == req.body.imageId)) {
+      await user.updateOne({ $push: { saved: image } });
       res.status(200).json({
         message: "image has been saved",
-        imageId: req.body.imageId,
+        image,
         isSaved: true,
       });
       return;
     }
-    await user.updateOne({ $pull: { saved: req.body.imageId } });
+    await user.updateOne({ $pull: { saved: image } });
     res.status(200).json({
       message: "image has been unsaved",
-      imageId: req.body.imageId,
+      image,
       isSaved: false,
     });
     return;
