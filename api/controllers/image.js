@@ -101,22 +101,26 @@ const getImages = async (req, res) => {
 
 const saveImage = async (req, res) => {
   try {
-    const image = await Image.findById(req.params.id);
+    const image = await Image.findById(req.body.imageId);
     if (!image) {
       res.status(400).json({ message: "No image found" });
     }
     const user = await User.findById(req.user.id);
-    if (!user.saved.includes(req.params.id)) {
-      await user.updateOne({ $push: { saved: req.params.id } });
-      res
-        .status(200)
-        .json({ message: "image has been saved", imageId: req.params.id });
+    if (!user.saved.includes(req.body.imageId)) {
+      await user.updateOne({ $push: { saved: req.body.imageId } });
+      res.status(200).json({
+        message: "image has been saved",
+        imageId: req.body.imageId,
+        isSaved: true,
+      });
       return;
     }
-    await user.updateOne({ $pull: { saved: req.params.id } });
-    res
-      .status(200)
-      .json({ message: "image has been unsaved", imageId: req.params.id });
+    await user.updateOne({ $pull: { saved: req.body.imageId } });
+    res.status(200).json({
+      message: "image has been unsaved",
+      imageId: req.body.imageId,
+      isSaved: false,
+    });
     return;
   } catch (error) {
     console.log("Error while saving image: ", error);
