@@ -103,7 +103,18 @@ const profileSlice = createSlice({
       .addCase(saveImage.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.profile.saved.push(action.payload);
+        if (
+          !state.profile.saved.some(
+            (image) => image._id === action.payload.image._id
+          )
+        ) {
+          console.log(action.payload);
+          state.profile.saved.push(action.payload.image);
+        } else {
+          state.profile.saved = [...state.profile.saved].filter(
+            (item) => item._id !== action.payload.image._id
+          );
+        }
       })
       .addCase(saveImage.rejected, (state, action) => {
         state.isSuccess = false;

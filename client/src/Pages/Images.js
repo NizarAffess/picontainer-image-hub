@@ -5,19 +5,22 @@ import { Link, useNavigate } from "react-router-dom";
 import Image from "../Components/Image";
 import Spinner from "../Components/Spinner";
 import { getImages, reset } from "../features/images/imageSlice";
-import { saveImage } from "../features/profile/profileSlice";
+import { getUserProfile, saveImage } from "../features/profile/profileSlice";
 
 const Images = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { saved } = useSelector((state) => state.profile.profile);
   const { user } = useSelector((state) => state.auth);
   const { images, isError, isLoading, message } = useSelector(
     (state) => state.images
   );
 
+  const isSaved = (imageId) => saved.some((item) => item._id === imageId);
   const saveItem = (id) => {
     dispatch(saveImage({ imageId: id }));
+    dispatch(getUserProfile(user.user.token));
   };
 
   useEffect(() => {
@@ -51,7 +54,7 @@ const Images = () => {
           >
             {/* <BookmarkBorderIcon aria-label="save" /> 
             <BookmarkIcon aria-label="unsave" /> */}
-            Save
+            {saved && isSaved(image._id) ? "Unsave" : "Save"}
           </IconButton>
         </Box>
       ))}
