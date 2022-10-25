@@ -1,4 +1,4 @@
-import { ImageList } from "@mui/material";
+import { Box, ImageList, IconButton } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -35,9 +35,19 @@ const Images = () => {
   return (
     <ImageList sx={{ margin: "2em" }} cols={3}>
       {images?.map((image) => (
-        <Link key={image._id} to={`/image/${image._id}`} className="image-item">
-          <Image image={image} />
-        </Link>
+        <Box key={image._id} className="image">
+          <Link to={`/image/${image._id}`} className="image-item">
+            <Image image={image} />
+          </Link>
+          <IconButton
+            aria-label={`save ${image.title}`}
+            className="image-title image-save"
+          >
+            {/* <BookmarkBorderIcon aria-label="save" /> 
+            <BookmarkIcon aria-label="unsave" /> */}
+            Save
+          </IconButton>
+        </Box>
       ))}
     </ImageList>
   );

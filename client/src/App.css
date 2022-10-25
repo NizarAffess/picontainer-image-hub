@@ -5,14 +5,28 @@
   overflow-x: hidden;
 }
 
+.image{
+  position: relative;
+}
+
 .image-title {
   opacity: 0;
   transition: .2s ease-in-out;
   background: transparent !important;
 }
 
-.image-item:hover .image-title {
+.image:hover .image-title {
   opacity: 1;
+}
+
+.image-save {
+  position: absolute !important;
+  top: 0;
+  right: 0;
+}
+
+.image-save:hover {
+  text-shadow: #FCB 1px 0 10px;
 }
 
 .account-link {
