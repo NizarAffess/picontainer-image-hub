@@ -38,6 +38,14 @@
   padding: 0;
 }
 
+.cover-wrapper {
+  width: 100%;
+  height: auto;
+  max-height: 300px;
+  text-align: center;
+  overflow-y: hidden;
+}
+
 .image-container {
   position: relative !important;
 }

@@ -1,6 +1,6 @@
 import { Avatar, Box, Button, Grid, Typography } from "@mui/material";
 
-const ProfileImage = ({ profile, file, preview, handleFileChange }) => {
+const ProfileImage = ({ profile, preview, handleFileChange }) => {
   return (
     <Grid item textAlign="center">
       <Box className="image-container">

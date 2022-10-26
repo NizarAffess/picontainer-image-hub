@@ -1,21 +1,8 @@
 import { Box, Button } from "@mui/material";
 
-const CoverImage = ({
-  profile,
-  coverFile,
-  coverPreview,
-  handleCoverFileChange,
-}) => {
+const CoverImage = ({ profile, coverPreview, handleCoverFileChange }) => {
   return (
-    <Box
-      sx={{
-        width: "100%",
-        height: "auto",
-        maxHeight: "300px",
-        textAlign: "center",
-        overflowY: "hidden",
-      }}
-    >
+    <Box className="cover-wrapper">
       <Box className="image-container">
         <img
           style={{ maxHeight: "300px", width: "100%" }}
