@@ -1,21 +1,40 @@
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const Token = require("../models/token");
+const { sendVerifEmail } = require("../utils/sendEmail");
 
 const registerUser = async (req, res) => {
   try {
-    const userExists = await User.findOne({ email: req.body.email });
-    if (userExists) {
+    let user = await User.findOne({ email: req.body.email });
+    if (user) {
       res.status(400).json({ message: "User already exist" });
       return;
     }
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
-    const user = await User.create({
+    user = await User.create({
       username: req.body.username,
       email: req.body.email,
       password: hashedPassword,
     });
+
+    const token = await Token.create({
+      userId: user._id,
+      token: generateToken(user._id),
+    });
+    const url = `${process.env.BASE_URL}/api/${user._id}/verify/${token.token}`;
+    await sendVerifEmail(
+      user.email,
+      "Email verification",
+      `Click on the following link to verify your email: \n${url}`
+    );
+    res
+      .status(201)
+      .json({
+        message: "An account verification email was sent to your account!",
+      });
+
     if (user) {
       const { username, email, _id } = user._doc;
       res.status(201).json({
@@ -31,6 +50,25 @@ const registerUser = async (req, res) => {
   } catch (error) {
     console.log("Error while creating user: ", error);
     res.status(500).json(error);
+  }
+};
+
+const verifyEmail = async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.params.id });
+    if (!user) return res.status(400).json({ message: "Invalid url" });
+
+    const token = await Token.findOne({
+      userId: user._id,
+      token: req.params.token,
+    });
+    if (!token) return res.status(400).json({ message: "Invalid url" });
+
+    await User.findByIdAndUpdate(user._id, { isVerified: true }, { new: true });
+    await token.remove();
+    res.status(200).json({ message: "Email has been successfully verified" });
+  } catch (error) {
+    res.status(500).json({ message: "Error while verifying email", error });
   }
 };
 
@@ -111,4 +149,10 @@ const generateToken = (id) => {
   });
 };
 
-module.exports = { registerUser, loginUser, getProfile, addProfileInfo };
+module.exports = {
+  registerUser,
+  loginUser,
+  getProfile,
+  addProfileInfo,
+  verifyEmail,
+};

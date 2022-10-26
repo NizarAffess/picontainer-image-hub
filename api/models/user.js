@@ -11,6 +11,7 @@ const UserSchema = new Schema(
     bio: { type: String },
     address: { type: String },
     saved: { type: Array, default: [] },
+    isVerified: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
