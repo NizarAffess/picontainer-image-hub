@@ -4,33 +4,33 @@ import { Link } from "react-router-dom";
 const Sign = () => {
   return (
     <List sx={{ display: "inline", position: "absolute", top: -8, right: 15 }}>
-      <Link style={{ textDecoration: "none" }} to="/register">
-        <Button
-          sx={{
-            color: "white",
-            fontSize: "16px",
-            bgColor: "red",
-            mx: 1,
-            textTransform: "capitalize",
-          }}
-          variant="contained"
-        >
-          Sign up
-        </Button>
-      </Link>
-      <Link style={{ textDecoration: "none" }} to="/login">
+      <Link style={{ textDecoration: "none", marginRight: "10px" }} to="/login">
         <Button
           sx={{
             color: "white",
             fontSize: "16px",
             my: 1,
-            mx: 1,
             textTransform: "capitalize",
+          }}
+        >
+          Sign in
+        </Button>
+      </Link>
+      <Link
+        style={{ textDecoration: "none", marginRight: "10px" }}
+        to="/register"
+      >
+        <Button
+          sx={{
+            color: "white",
+            fontSize: "16px",
+            bgColor: "red",
             border: "1px solid #fff",
+            textTransform: "capitalize",
           }}
           variant="outlined"
         >
-          Sign in
+          Sign up
         </Button>
       </Link>
     </List>
