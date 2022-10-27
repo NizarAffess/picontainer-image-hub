@@ -52,7 +52,7 @@ const verifyEmail = async (req, res) => {
 
     await User.findByIdAndUpdate(user._id, { isVerified: true }, { new: true });
     await token.remove();
-    res.status(200).json({ message: "Email has been successfully verified" });
+    res.status(301).redirect(process.env.REDIRECT_URL);
   } catch (error) {
     res.status(500).json({ message: "Error while verifying email", error });
   }
