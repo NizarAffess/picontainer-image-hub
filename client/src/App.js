@@ -10,6 +10,7 @@ import Profile from "./Pages/Profile";
 import SignIn from "./Pages/SignIn";
 import SignUp from "./Pages/SignUp";
 import UploadImage from "./Pages/UploadImage";
+import VerifyEmail from "./Pages/VerifyEmail";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/login" element={<SignIn />} />
           <Route path="/user/profile" element={<Profile />} />
           <Route path="/user/account" element={<Account />} />
+          <Route path="/user/verify" element={<VerifyEmail />} />
         </Routes>
       </Router>
     </div>

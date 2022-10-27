@@ -63,6 +63,27 @@
   opacity: 1;
 }
 
+.verified {
+  margin-top: 3em;
+  width: 320px;
+  height: 320px;
+}
+
+.login-button {
+  color: #fff !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+  background: #00cc00 !important;
+  border: 1px solid #00cc00 !important;
+  text-transform: capitalize !important;
+}
+
+.login-button:hover {
+  color: #fff !important;
+  border: 1px solid #3dd83d !important;
+  background: #3dd83d !important;
+}
+
 @media (min-width: 600px) {
   .profile-container {
     padding: 0 !important;
