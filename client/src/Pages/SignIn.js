@@ -45,7 +45,7 @@ const SignIn = () => {
     if (isError) {
       console.log("SNACKBAR: Error while login");
     }
-    if (isSuccess || user) {
+    if (isSuccess && user) {
       console.log("SNACKBAR: User successfully logged in");
       navigate("/", { state: { open: true, message: message } });
     }
