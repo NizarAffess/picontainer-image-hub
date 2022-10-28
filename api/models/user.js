@@ -10,6 +10,8 @@ const UserSchema = new Schema(
     coverPhoto: { type: String },
     bio: { type: String },
     address: { type: String },
+    saved: { type: Array, default: [] },
+    isVerified: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

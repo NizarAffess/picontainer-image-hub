@@ -36,9 +36,26 @@ const addProfileInfo = async (token, profileData) => {
   }
 };
 
+const saveImage = async (token, imageId) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    console.log(imageId);
+    const response = await axios.patch(`${apiURL}/image/save`, imageId, config);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.log("Error while saving image: ", error);
+  }
+};
+
 const profileService = {
   getProfile,
   addProfileInfo,
+  saveImage,
 };
 
 export default profileService;

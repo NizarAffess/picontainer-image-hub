@@ -53,6 +53,37 @@ const getImage = createAsyncThunk("/image/:id", async (id, thunkAPI) => {
   }
 });
 
+const deleteImage = createAsyncThunk("/image/delete", async (id, thunkAPI) => {
+  try {
+    const { token } = thunkAPI.getState().auth.user.user;
+    return await imagesService.deleteImage(token, id);
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
+const updateImage = createAsyncThunk(
+  "/image/update",
+  async (id, imageData, thunkAPI) => {
+    try {
+      const { token } = thunkAPI.getState().auth.user.user;
+      return await imagesService.updateImage(token, id, imageData);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 const imageSlice = createSlice({
   name: "image",
   initialState,
@@ -70,6 +101,34 @@ const imageSlice = createSlice({
         state.images.push(action.payload);
       })
       .addCase(createImage.rejected, (state, action) => {
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(deleteImage.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteImage.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.images = state.images.filter(
+          (image) => image._id !== action.payload.id
+        );
+      })
+      .addCase(deleteImage.rejected, (state, action) => {
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(updateImage.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateImage.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.images.push(action.payload);
+      })
+      .addCase(updateImage.rejected, (state, action) => {
         state.isSuccess = false;
         state.isError = true;
         state.message = action.payload;
@@ -104,5 +163,5 @@ const imageSlice = createSlice({
 });
 
 export const { reset } = imageSlice.actions;
-export { createImage, getImages, getImage };
+export { createImage, getImages, getImage, deleteImage, updateImage };
 export default imageSlice.reducer;

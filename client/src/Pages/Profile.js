@@ -10,6 +10,8 @@ import Spinner from "../Components/Spinner";
 import CoverImage from "../Components/CoverImage";
 import ProfileImage from "../Components/ProfileImage";
 import ProfileInfo from "../Components/ProfileInfo";
+import Images from "./Images";
+import ProfileTabs from "../Components/ProfileTabs";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -38,10 +40,10 @@ const Profile = () => {
   };
 
   const [formData, setFormData] = useState({
-    about: "",
-    address: "",
+    bio: profile.bio ? profile.bio : "",
+    address: profile.address ? profile.address : "",
   });
-  const { about, address } = formData;
+  const { bio, address } = formData;
 
   const handleChange = (e) => {
     setFormData({
@@ -55,14 +57,10 @@ const Profile = () => {
 
   const saveProfileInfo = async () => {
     const profileData = new FormData();
-    if (file) {
-      profileData.append("photo", file);
-    }
-    if (coverFile) {
-      profileData.append("coverPhoto", coverFile);
-    }
-    profileData.append("bio", about && about);
-    profileData.append("address", address && address);
+    if (file) profileData.append("photo", file);
+    if (coverFile) profileData.append("coverPhoto", coverFile);
+    if (bio) profileData.append("bio", bio);
+    if (address) profileData.append("address", address);
     dispatch(addProfileInfo(profileData));
   };
 
@@ -137,6 +135,7 @@ const Profile = () => {
       ) : (
         <Typography>No data Found!</Typography>
       )}
+      <ProfileTabs images={<Images />} />
     </Container>
   );
 };

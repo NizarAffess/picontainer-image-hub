@@ -3,6 +3,7 @@ const {
   loginUser,
   getProfile,
   addProfileInfo,
+  verifyEmail,
 } = require("../controllers/user");
 const { protect } = require("../middleware/auth");
 const upload = require("../middleware/cloudinary");
@@ -18,5 +19,6 @@ router.put(
   addProfileInfo
 );
 router.get("/user/profile", protect, getProfile);
+router.get("/:id/verify/:token", verifyEmail);
 
 module.exports = router;

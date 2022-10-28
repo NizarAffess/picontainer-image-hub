@@ -1,4 +1,5 @@
 const Image = require("../models/image");
+const User = require("../models/user");
 
 const getCreateRoute = (req, res) => {
   res.status(200).json({ message: "Create image page" });
@@ -34,6 +35,9 @@ const updateImage = async (req, res) => {
     if (image.user.toString() !== req.user.id) {
       res.status(401).json({ message: "User not authorized" });
       return;
+    }
+    if (req.file) {
+      req.body.url = req.file.path;
     }
     const updatedImage = await Image.findByIdAndUpdate(
       req.params.id,
@@ -95,6 +99,35 @@ const getImages = async (req, res) => {
   }
 };
 
+const saveImage = async (req, res) => {
+  try {
+    const image = await Image.findById(req.body.imageId);
+    if (!image) {
+      res.status(400).json({ message: "No image found" });
+    }
+    const user = await User.findById(req.user.id);
+    if (!user.saved.some((image) => image._id == req.body.imageId)) {
+      await user.updateOne({ $push: { saved: image } });
+      res.status(200).json({
+        message: "image has been saved",
+        image,
+        isSaved: true,
+      });
+      return;
+    }
+    await user.updateOne({ $pull: { saved: image } });
+    res.status(200).json({
+      message: "image has been unsaved",
+      image,
+      isSaved: false,
+    });
+    return;
+  } catch (error) {
+    console.log("Error while saving image: ", error);
+    res.status(500).json(error);
+  }
+};
+
 module.exports = {
   createImage,
   getCreateRoute,
@@ -102,4 +135,5 @@ module.exports = {
   deleteImage,
   getImage,
   getImages,
+  saveImage,
 };
