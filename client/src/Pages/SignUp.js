@@ -16,6 +16,7 @@ import Spinner from "../Components/Spinner";
 const theme = createTheme();
 
 const SignUp = () => {
+  const [inbox, setInbox] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -37,7 +38,7 @@ const SignUp = () => {
     if (isSuccess || user) {
       // user might/not be removed here
       console.log("SNACKBAR: User Successfully registered");
-      navigate("/", { state: { open: true, message } });
+      // navigate("/login", { state: { open: true, message } });
     }
     dispatch(reset());
   }, [isError, user, isSuccess, message, navigate, dispatch]);
@@ -55,6 +56,7 @@ const SignUp = () => {
       console.log("SNACKBAR: Passwords don't match");
     } else {
       dispatch(register({ username, email, password }));
+      setInbox(true);
     }
   };
 
@@ -64,91 +66,108 @@ const SignUp = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
+      {!inbox ? (
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Box
+            sx={{
+              marginTop: 8,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: "primary.main" }}></Avatar>
+            <Typography component="h1" variant="h5">
+              Sign up
+            </Typography>
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{ mt: 3 }}
+            >
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    onChange={handleChange}
+                    id="username"
+                    value={username}
+                    label="username"
+                    name="username"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    onChange={handleChange}
+                    id="email"
+                    value={email}
+                    label="Email Address"
+                    name="email"
+                    type="email"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    onChange={handleChange}
+                    name="password"
+                    value={password}
+                    label="Password"
+                    type="password"
+                    id="password"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    onChange={handleChange}
+                    name="confirmPassword"
+                    value={confirmPassword}
+                    label="Confirm Password"
+                    type="password"
+                    id="confirmPassword"
+                  />
+                </Grid>
+              </Grid>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign Up
+              </Button>
+              <Grid container justifyContent="flex-end">
+                <Grid item>
+                  <Link to="/login">Already have an account? Sign in</Link>
+                </Grid>
+              </Grid>
+            </Box>
+          </Box>
+        </Container>
+      ) : (
+        <Container
           sx={{
-            marginTop: 8,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            my: 4,
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "primary.main" }}></Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
+          {/* <MarkEmailUnreadIcon  /> */}
+          <img src="/test-assets/inbox.png" alt="Mailbox" />
+          <Typography sx={{ my: 2 }} variant="h5">
+            We have sent a verification email, check out your inbox!
           </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
-          >
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  onChange={handleChange}
-                  id="username"
-                  value={username}
-                  label="username"
-                  name="username"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  onChange={handleChange}
-                  id="email"
-                  value={email}
-                  label="Email Address"
-                  name="email"
-                  type="email"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  onChange={handleChange}
-                  name="password"
-                  value={password}
-                  label="Password"
-                  type="password"
-                  id="password"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  onChange={handleChange}
-                  name="confirmPassword"
-                  value={confirmPassword}
-                  label="Confirm Password"
-                  type="password"
-                  id="confirmPassword"
-                />
-              </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign Up
-            </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link to="/login">Already have an account? Sign in</Link>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
-      </Container>
+        </Container>
+      )}
     </ThemeProvider>
   );
 };
