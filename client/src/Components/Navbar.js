@@ -61,7 +61,7 @@ const Navbar = () => {
               </Button>
             </Link>
           ))}
-          {user && (
+          {user?.user && (
             <IconButton
               onClick={handleClick}
               size="small"
@@ -74,7 +74,7 @@ const Navbar = () => {
             </IconButton>
           )}
         </>
-        {!user ? (
+        {!user?.user ? (
           <Sign />
         ) : (
           <AccountMenu
