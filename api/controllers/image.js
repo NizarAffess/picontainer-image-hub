@@ -88,7 +88,8 @@ const getImage = async (req, res) => {
 
 const getImages = async (req, res) => {
   try {
-    const images = await Image.find({ user: req.user.id });
+    const query = req.query.user === "true" ? { user: req.user.id } : null;
+    const images = await Image.find(query);
     if (!images) {
       res.status(400).json({ message: "No images found" });
     }
