@@ -70,7 +70,7 @@ const Navbar = () => {
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
             >
-              <Avatar src={user.user.photo} sx={{ width: 32, height: 32 }} />
+              <Avatar src={user.user?.photo} sx={{ width: 32, height: 32 }} />
             </IconButton>
           )}
         </>
@@ -83,7 +83,7 @@ const Navbar = () => {
             anchorEl={anchorEl}
             handleClick={handleClick}
             handleClose={handleClose}
-            photo={user.user.photo}
+            photo={user.user?.photo}
           />
         )}
       </Box>
