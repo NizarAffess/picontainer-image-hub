@@ -135,7 +135,7 @@ const Profile = () => {
       ) : (
         <Typography>No data Found!</Typography>
       )}
-      <ProfileTabs images={<Images />} />
+      <ProfileTabs images={<Images user={true} />} />
     </Container>
   );
 };

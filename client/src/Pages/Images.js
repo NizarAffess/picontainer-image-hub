@@ -1,13 +1,12 @@
-import { Box, ImageList, IconButton } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Gallery from "../Components/Gallery";
 import Spinner from "../Components/Spinner";
 import { getImages, reset } from "../features/images/imageSlice";
 import { getUserProfile, saveImage } from "../features/profile/profileSlice";
 
-const Images = () => {
+const Images = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -30,11 +29,12 @@ const Images = () => {
     if (!user) {
       navigate("/login");
     }
-    dispatch(getImages());
+    const query = props.user ? true : false;
+    dispatch(getImages(query));
     return () => {
       dispatch(reset());
     };
-  }, [isError, user, message, dispatch, navigate]);
+  }, [isError, user, message, props.user, dispatch, navigate]);
 
   if (isLoading) {
     return <Spinner />;

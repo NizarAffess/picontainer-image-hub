@@ -20,14 +20,14 @@ const createImage = async (token, imageData) => {
   }
 };
 
-const getImages = async (token) => {
+const getImages = async (user, token) => {
   try {
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     };
-    const response = await axios.get(`${apiURL}/images`, config);
+    const response = await axios.get(`${apiURL}/images?user=${user}`, config);
     return response.data;
   } catch (error) {
     console.log("Error while getting images: ", error);

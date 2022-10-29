@@ -27,10 +27,10 @@ const createImage = createAsyncThunk(
   }
 );
 
-const getImages = createAsyncThunk("/images", async (_, thunkAPI) => {
+const getImages = createAsyncThunk("/images", async (user, thunkAPI) => {
   try {
     const { token } = thunkAPI.getState().auth.user.user;
-    return await imagesService.getImages(token);
+    return await imagesService.getImages(user, token);
   } catch (error) {
     const message =
       (error.response && error.response.data && error.response.data.message) ||
