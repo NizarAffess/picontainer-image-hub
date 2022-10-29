@@ -2,7 +2,7 @@ import { Box, ImageList, IconButton } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import Image from "../Components/Image";
+import Gallery from "../Components/Gallery";
 import Spinner from "../Components/Spinner";
 import { getImages, reset } from "../features/images/imageSlice";
 import { getUserProfile, saveImage } from "../features/profile/profileSlice";
@@ -41,24 +41,12 @@ const Images = () => {
   }
 
   return (
-    <ImageList sx={{ margin: "2em" }} cols={3}>
-      {images?.map((image) => (
-        <Box key={image._id} className="image">
-          <Link to={`/image/${image._id}`} className="image-item">
-            <Image image={image} />
-          </Link>
-          <IconButton
-            aria-label={`save ${image.title}`}
-            className="image-title image-save"
-            onClick={() => saveItem(image._id)}
-          >
-            {/* <BookmarkBorderIcon aria-label="save" /> 
-            <BookmarkIcon aria-label="unsave" /> */}
-            {saved && isSaved(image._id) ? "Unsave" : "Save"}
-          </IconButton>
-        </Box>
-      ))}
-    </ImageList>
+    <Gallery
+      images={images}
+      saved={saved}
+      saveItem={saveItem}
+      isSaved={isSaved}
+    />
   );
 };
 
