@@ -58,10 +58,10 @@ const ProfileTabs = (props) => {
         {props.images}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Saved
+        {props.savedImages}
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Favorites
+        Coming Soon...
       </TabPanel>
     </Box>
   );

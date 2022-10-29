@@ -1,8 +1,11 @@
 import { Box, IconButton, ImageList } from "@mui/material";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Image from "./Image";
 
-const Gallery = ({ images, saveItem, saved, isSaved }) => {
+const Gallery = ({ images, saveItem, isSaved }) => {
+  const { saved } = useSelector((state) => state.profile.profile);
+
   return (
     <ImageList sx={{ margin: "2em" }} cols={3}>
       {images?.map((image) => (

@@ -12,6 +12,7 @@ import ProfileImage from "../Components/ProfileImage";
 import ProfileInfo from "../Components/ProfileInfo";
 import Images from "./Images";
 import ProfileTabs from "../Components/ProfileTabs";
+import SavedItems from "../Components/SavedItems";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -135,7 +136,10 @@ const Profile = () => {
       ) : (
         <Typography>No data Found!</Typography>
       )}
-      <ProfileTabs images={<Images user={true} />} />
+      <ProfileTabs
+        savedImages={<SavedItems />}
+        images={<Images user={true} />}
+      />
     </Container>
   );
 };
