@@ -61,7 +61,7 @@ const ProfileTabs = (props) => {
         {props.savedImages}
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Coming Soon...
+        <h3>Coming Soon...</h3>
       </TabPanel>
     </Box>
   );
