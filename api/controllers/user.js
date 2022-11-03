@@ -1,4 +1,4 @@
-const User = require("../models/user");
+const { User, validate } = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Token = require("../models/token");
@@ -6,6 +6,12 @@ const { sendVerifEmail } = require("../utils/sendEmail");
 
 const registerUser = async (req, res) => {
   try {
+    const { error } = validate(req.body);
+    if (error) {
+      res.status(400).json({ message: error.details[0].message });
+      return;
+    }
+
     let user = await User.findOne({ email: req.body.email });
     if (user) {
       res.status(400).json({ message: "User already exist" });
