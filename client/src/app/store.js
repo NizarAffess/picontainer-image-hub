@@ -9,4 +9,5 @@ export const store = configureStore({
     images: imageSlice,
     profile: profileSlice,
   },
+  devTools: false,
 });
