@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { reset, updateImage } from "../features/images/imageSlice";
+import { updateImage } from "../features/images/imageSlice";
 import { useNavigate } from "react-router-dom";
 import UploadForm from "../Components/UploadForm";
 import Spinner from "../Components/Spinner";
