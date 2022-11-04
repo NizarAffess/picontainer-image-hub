@@ -10,7 +10,7 @@ const app = express();
 connectDB();
 
 const corsOptions = {
-  origin: "http://localhost:3020",
+  origin: process.env.CORS_ORIGIN,
 };
 
 app.use(express.json());
