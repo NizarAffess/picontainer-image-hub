@@ -1,8 +1,9 @@
-const { User, validate } = require("../models/user");
+const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Token = require("../models/token");
 const { sendVerifEmail } = require("../utils/sendEmail");
+const { validate } = require("../utils/validate");
 
 const registerUser = async (req, res) => {
   try {
