@@ -9,5 +9,5 @@ export const store = configureStore({
     images: imageSlice,
     profile: profileSlice,
   },
-  devTools: false,
+  devTools: process.env.NODE_ENV === "production" ? false : true,
 });
