@@ -5,7 +5,7 @@
 <br><br>
 ![alt text](https://res.cloudinary.com/dru9x9rey/image/upload/v1668199992/website-images/webp-images/upload_ewj6rg.webp "Upload image page")
 ## Overview
-A Full Stack image sharing app (Unsplash clone) build with the MERN stack, MUI and Redux-toolkit, featuring:
+A Full Stack image sharing app (Unsplash clone) built with the MERN stack, MUI and Redux-toolkit, featuring:
 - Authentication with email verification.
 - CRUD operations for images.
 - Image gallery.
